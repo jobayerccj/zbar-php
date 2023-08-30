@@ -131,6 +131,10 @@ class Zbar
         $encodedOutput = json_encode($xml);
         $decodedOutput = json_decode($encodedOutput);
 
-        return $decodedOutput->source->index->symbol;
+        if (is_array($decodedOutput->source->index)) {
+            return $decodedOutput->source->index[0]->symbol;
+        } else {
+            return $decodedOutput->source->index->symbol;
+        }
     }
 }

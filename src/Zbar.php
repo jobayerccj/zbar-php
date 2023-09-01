@@ -88,6 +88,10 @@ class Zbar
     {
         $output = $this->runProcess();
 
+        if (is_array($output)) {
+            return $output;
+        }
+
         return $output->data;
     }
 
@@ -123,7 +127,7 @@ class Zbar
      * Return symbol object.
      *
      * @param $output
-     * @return object
+     * @return object|array
      */
     private function parse($output)
     {
@@ -132,7 +136,7 @@ class Zbar
         $decodedOutput = json_decode($encodedOutput);
 
         if (is_array($decodedOutput->source->index)) {
-            return $decodedOutput->source->index[0]->symbol;
+            return $decodedOutput->source->index;
         } else {
             return $decodedOutput->source->index->symbol;
         }
